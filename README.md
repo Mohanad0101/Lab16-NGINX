@@ -324,7 +324,7 @@ echo '<h1>I have successfully installed and configured nginx webserver</h1> </br
 
 `powershell`
 
-`curl -I http://<IP-адрес-вашей-ВМ>`
+`http://<IP-адрес-вашей-ВМ>`
 
 Ожидаемый результат: `HTTP/1.1 301 Moved Permanently` и заголовок `Location: https://...`
 
@@ -386,7 +386,7 @@ echo '<h1>I have successfully installed and configured nginx webserver</h1> </br
 
 `sudo nginx -t`  
 `sudo systemctl reload nginx`  
-`curl -k https://localhost`
+` https://192.168.56.10?`
 
 *`#   7: Итоговая проверка`*  
 `sudo ss -tulpn | grep nginx`
@@ -420,16 +420,6 @@ echo '<h1>I have successfully installed and configured nginx webserver</h1> </br
 
 ---
 
-## **Рекомендации для production**
-
-| Практика | Реализация |
-| :---- | :---- |
-| Доверенный сертификат | `sudo apt install certbot python3-certbot-nginx sudo certbot --nginx -d домен.ru` |
-| Скрытие версии Nginx | `server_tokens off;` в `nginx.conf` |
-| HSTS | `add_header Strict-Transport-Security "max-age=31536000" always;` |
-| Проверка перед перезагрузкой | `sudo nginx -t && sudo systemctl reload nginx` |
-
----
 
 ## **Заключение**
 
