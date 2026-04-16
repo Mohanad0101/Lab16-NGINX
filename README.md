@@ -113,28 +113,28 @@ http://192.168.56.10?
 
 ### **Шаг 3.1: Разрешение портов**
 
-`bash`
+---`bash`
 
 `sudo ufw allow ssh`  
 `sudo ufw allow http`
 
 `sudo ufw allow https`
-
+---
 ### **Шаг 3.2: Включение UFW**
 
-`bash`
+---`bash`
 
 `sudo ufw enable`
-
+---
 При запросе введите `y`.
 
 ### **Шаг 3.3: Проверка правил**
 
-`bash`
+---`bash`
 
 `sudo ufw status verbose`
 
-
+---
 ### **Шаг 3.4: Тестирование с хост-машины**
 
 В PowerShell на Windows:
@@ -144,7 +144,9 @@ http://192.168.56.10?
 `curl  http://<IP-адрес-вашей-ВМ>`
 
 Ожидаемый результат: 
-StatusCode   : 200                                                                        StatusDescription : OK                                                                    Content  : <!DOCTYPE html>  
+StatusCode   : 200   
+StatusDescription : OK 
+Content  : <!DOCTYPE html>  
 ---
 
 ## **  4: Изучение конфигурации Nginx**
@@ -153,10 +155,10 @@ StatusCode   : 200                                                              
 
 ### **Шаг 4.1: Просмотр главного файла**
 
-`bash`
+---`bash`
 
 `sudo cat /etc/nginx/nginx.conf`
-
+---
 Ключевые директивы:
 
 | Директива | Значение |
@@ -167,12 +169,12 @@ StatusCode   : 200                                                              
 
 ### **Шаг 4.2: Модульная структура**
 
-`bash`
+---`bash`
 
 `ls -la /etc/nginx/sites-available/`
 
 `ls -la /etc/nginx/sites-enabled/`
-
+---
 Пояснение:
 
 * `sites-available`   хранит все конфигурации (активные и неактивные)  
@@ -243,7 +245,7 @@ StatusCode   : 200                                                              
 
 `nginx`
 
-server {
+`server {
     listen 443 ssl;
     server_name _;
 
@@ -263,7 +265,7 @@ server {
     server_name _;
 
     return 301 https://$host$request_uri;
-}
+}`
 
 Что делает конфигурация:
 
