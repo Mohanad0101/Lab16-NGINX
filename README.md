@@ -283,14 +283,18 @@ server {
 `sudo nginx -t`
 
 `sudo systemctl reload nginx`
-
+---
+`bash`
+echo '<h1>I have successfully installed and configured nginx webserver</h1> </br> <h2> Your Name here</h2>' | sudo tee /var/www/html/index.html
+---
 Пояснение: `reload` применяет конфигурацию без остановки сервера (graceful reload).
+
 
 ### **Шаг 6.4: Проверка HTTPS на локальной машине**
 
-`bash`
+`from windows browser `
 
-`curl -k https://localhost`
+`https://192.168.56.10?`
 
 Ожидаемый результат: HTML-содержимое страницы приветствия Nginx.
 
