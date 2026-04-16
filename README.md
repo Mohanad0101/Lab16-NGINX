@@ -100,7 +100,9 @@ Nginx :это высокопроизводительный веб\-сервер,
 `curl -I http://localhost`
 
 Ожидаемый результат: `HTTP/1.1 200 OK`, `Server: nginx`
-
+---
+Windows Browser 
+http://192.168.56.10?
 ---
 
 ## **  3: Настройка межсетевого экрана UFW**
@@ -132,26 +134,17 @@ Nginx :это высокопроизводительный веб\-сервер,
 
 `sudo ufw status verbose`
 
-Ожидаемый результат:
-
-`text`
-
-`22/tcp (ssh)    ALLOW IN`  
-`80/tcp (http)   ALLOW IN`  
-`443/tcp (https) ALLOW IN`
-
-`Default: deny (incoming)`
 
 ### **Шаг 3.4: Тестирование с хост-машины**
 
 В PowerShell на Windows:
 
-`powershell`
+`in new powershell terminal`
 
-`curl -I http://<IP-адрес-вашей-ВМ>`
+`curl  http://<IP-адрес-вашей-ВМ>`
 
-Ожидаемый результат: `HTTP/1.1 200 OK`
-
+Ожидаемый результат: 
+StatusCode   : 200                                                                        StatusDescription : OK                                                                    Content  : <!DOCTYPE html>  
 ---
 
 ## **  4: Изучение конфигурации Nginx**
@@ -250,27 +243,27 @@ Nginx :это высокопроизводительный веб\-сервер,
 
 `nginx`
 
-`server {`  
-    `listen 443 ssl;`  
-    `server_name _;`  
-      
-    `ssl_certificate /etc/nginx/ssl/selfsigned.crt;`  
-    `ssl_certificate_key /etc/nginx/ssl/selfsigned.key;`  
-      
-    `root /var/www/html;`  
-    `index index.html index.htm;`  
-      
-    `location / {`  
-        `try_files $uri $uri/ =404;`  
-    `}`  
-`}`
+server {
+    listen 443 ssl;
+    server_name _;
 
-`server {`  
-    `listen 80;`  
-    `server_name _;`  
-    `return 301 https://$host$request_uri;`
+    ssl_certificate /etc/nginx/ssl/selfsigned.crt;
+    ssl_certificate_key /etc/nginx/ssl/selfsigned.key;
 
-`}`
+    root /var/www/html;
+    index index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+server {
+    listen 80;
+    server_name _;
+
+    return 301 https://$host$request_uri;
+}
 
 Что делает конфигурация:
 
