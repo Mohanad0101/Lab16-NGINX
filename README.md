@@ -97,7 +97,7 @@ Nginx :это высокопроизводительный веб\-сервер,
 
 `bash`
 
-`curl -I http://localhost`
+`curl  http://localhost`
 
 Ожидаемый результат: `HTTP/1.1 200 OK`, `Server: nginx`
 ---
