@@ -244,8 +244,8 @@ Content  : <!DOCTYPE html>
 Замените содержимое на следующее:
 
 `nginx`
-
-`server {
+---
+server {
     listen 443 ssl;
     server_name _;
 
@@ -265,8 +265,8 @@ server {
     server_name _;
 
     return 301 https://$host$request_uri;
-}`
-
+}
+---
 Что делает конфигурация:
 
 | Блок | Функция |
