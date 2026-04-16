@@ -287,6 +287,7 @@ server {
 `sudo systemctl reload nginx`
 ---
 `bash`
+
 `echo '<h1>I have successfully installed and configured nginx webserver</h1> </br> <h2> Your Name here</h2>' | sudo tee /var/www/html/index.html`
 ---
 Пояснение: `reload` применяет конфигурацию без остановки сервера (graceful reload).
