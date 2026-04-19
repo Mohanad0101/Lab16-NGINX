@@ -93,9 +93,10 @@ Nginx :это высокопроизводительный веб\-сервер,
 sudo nano /etc/netplan/00-installer-config.yaml`
 
 
-Пример конфигурации:
+## Пример конфигурации:
 
 text
+
 network:
   version: 2
   ethernets:
