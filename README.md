@@ -95,9 +95,9 @@ sudo nano /etc/netplan/00-installer-config.yaml`
 
 ## Пример конфигурации:
 
-text
-
-network:
+"text"
+---
+"network:
   version: 2
   ethernets:
     enp0s3:
@@ -105,8 +105,8 @@ network:
     enp0s8:
       dhcp4: no
       addresses:
-        - 192.168.56.101/24
-
+        - 192.168.56.101/24"
+---
 Применить изменения:
 
 `bash`
