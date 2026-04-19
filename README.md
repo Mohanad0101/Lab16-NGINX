@@ -82,13 +82,16 @@ Nginx :это высокопроизводительный веб\-сервер,
 Проверить имена интерфейсов:
 
 `bash`
+
 `ip link`
 
 Открыть конфигурацию Netplan:
 
 `bash`
+
 `ls /etc/netplan/
 sudo nano /etc/netplan/00-installer-config.yaml`
+
 
 Пример конфигурации:
 
@@ -106,12 +109,15 @@ network:
 Применить изменения:
 
 `bash`
+
 `sudo netplan apply`
 
 Проверить результат:
 
 `bash`
+
 `ip addr show enp0s8`
+
 `ip route`
 
 ---
