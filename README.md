@@ -346,6 +346,8 @@ sudo systemctl reload nginx
 echo '<h1>I have successfully installed and configured nginx webserver</h1><br><h2>Your Name here</h2>' | sudo tee /var/www/html/index.html
 ```
 
+
+
 **Пояснение:** `reload` применяет конфигурацию без остановки сервера (**graceful reload**).
 
 ### **Шаг 6.4: Проверка HTTPS на локальной машине**
@@ -388,7 +390,7 @@ curl -I http://192.168.56.101
 ### **Проверка 7.4: Тестирование с Windows (HTTPS)**
 
 **WebBrowser:**  
-[https://192.168.56.101](https://192.168.56.101)
+[https://192.168.56.101](http://192.168.56.101)
 
 **Ожидаемый результат:** HTML-содержимое
 
@@ -402,6 +404,13 @@ sudo tail -5 /var/log/nginx/access.log
 
 ---
 
+Обновите стандартный веб-сайт "/var/www/html/index.html".
+
+Создайте красивую главную веб-страницу Nginx, используя HTML, CSS и JavaScript.
+
+Вы можете использовать Bootstrap или Tailwind CSS, чтобы сделать веб-сайт красивым и адаптивным для мобильных устройств.
+
+---
 ## **Полный список команд**
 
 ```bash
