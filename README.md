@@ -160,18 +160,6 @@ sudo systemctl status nginx
 ```
 
 **Ожидаемый результат:** `Active: active (running)`, `enabled`
-
-### **Шаг 2.4: Проверка HTTP-доступа**
-
-```bash
-curl http://localhost
-```
-
-**Ожидаемый результат:** `HTTP/1.1 200 OK`, `Server: nginx`
-
-**Windows Browser:**  
-[http://192.168.56.101](http://192.168.56.101)
-
 ---
 
 ## **3: Настройка межсетевого экрана UFW**
