@@ -373,11 +373,11 @@ sudo nano  /var/www/html/index.html
 
 **Ожидаемый результат:** Строки с `:80` и `:443`
 
-### **Проверка 6.5: Тестирование с Windows (HTTP → HTTPS)**
+### **Проверка Тестирование с Windows (HTTP → HTTPS)**
 
 **Ожидаемый результат:** `HTTP/1.1 301 Moved Permanently` и заголовок `Location: https://...`
 
-### **Проверка 6.6: Тестирование с Windows (HTTPS)**
+### **Проверка : Тестирование с Windows (HTTPS)**
 
 **WebBrowser:**  
 [https://192.168.56.101]
@@ -385,7 +385,7 @@ sudo nano  /var/www/html/index.html
 
 **Ожидаемый результат:** HTML-содержимое
 
-### **Проверка 6.7: Просмотр журнала доступа**
+### **Проверка : Просмотр журнала доступа**
 
 ```bash
 sudo tail -5 /var/log/nginx/access.log
