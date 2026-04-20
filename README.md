@@ -354,7 +354,8 @@ sudo nano  /var/www/html/index.html
 <h1>write your name <h1>
 <br>
  <h2> i have succesfully installed and configured nginx webserver</h2>
-</body>"
+</body>
+```
 
 **Пояснение:** `reload` применяет конфигурацию без остановки сервера (**graceful reload**).
 
