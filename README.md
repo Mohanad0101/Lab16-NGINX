@@ -48,13 +48,13 @@ Nginx :это высокопроизводительный веб\-сервер,
 `sudo systemctl stop apache2`
 
 `sudo systemctl disable apache2`
-
+---
 ### **Шаг 1.2: Полное удаление**
 
 `bash`
 
 `sudo apt purge --auto-remove apache2* -y`
-
+---
 ### **Шаг 1.3: Проверка**
 
 `bash`
