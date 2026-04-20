@@ -75,9 +75,16 @@ sudo ss -tulpn | grep :80
 
 ### **Команды для настройки**
 
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
+
 **Проверить имена интерфейсов:**
 
 ```bash
+sudo ip -br link
+sudo ip link set enp0s8 up
 ip link
 ```
 
@@ -114,6 +121,7 @@ sudo netplan apply
 ```bash
 ifconfig enp0s8
 ip addr show enp0s8
+ip link
 ip route
 ```
 
