@@ -347,14 +347,19 @@ sudo nano  /var/www/html/index.html
 
 ```
 ```text
-<heed>
-  <title> My Nginx webServer</title>
-</heed>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Nginx WebServer</title>
+</head>
 <body>
-<h1>write your name <h1>
-<br>
- <h2> i have succesfully installed and configured nginx webserver</h2>
+    <h1>Your name : Welcome to My Website </h1>
+    <p>I have Succesfully installed and configured Nginx WebServer.</p>
 </body>
+</html>
+
 ```
 
 **Пояснение:** `reload` применяет конфигурацию без остановки сервера (**graceful reload**).
@@ -362,37 +367,16 @@ sudo nano  /var/www/html/index.html
 ### **Шаг 6.4: Проверка HTTPS на локальной машине**
 
 **From Windows browser:**  
-[https://192.168.56.101](https://192.168.56.101)
+[https://192.168.56.101]
+(http://192.168.56.101)
 
 **Ожидаемый результат:** HTML-содержимое страницы приветствия **Nginx**.
 
 ---
 
-## **7: Итоговая проверка**
-
-### **Проверка 7.1: Состояние службы**
-
-```bash
-sudo systemctl status nginx --no-pager
-```
-
-**Ожидаемый результат:** `active (running)`
-
-### **Проверка 7.2: Прослушиваемые порты**
-
-```bash
-sudo ss -tulpn | grep nginx
-```
-
 **Ожидаемый результат:** Строки с `:80` и `:443`
 
 ### **Проверка 7.3: Тестирование с Windows (HTTP → HTTPS)**
-
-**В PowerShell:**
-
-```powershell
-curl -I http://192.168.56.101
-```
 
 **Ожидаемый результат:** `HTTP/1.1 301 Moved Permanently` и заголовок `Location: https://...`
 
