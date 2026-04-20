@@ -197,12 +197,15 @@ sudo ufw status verbose
 ```powershell
 curl http://192.168.56.101
 ```
-
 **Ожидаемый результат:**  
 Ожидаемый результат: 
 StatusCode   : 200   
 StatusDescription : OK 
 Content  : <!DOCTYPE html>  
+
+
+**Windows Browser:**  
+[http://192.168.56.101](http://192.168.56.101)
 
 ---
 
