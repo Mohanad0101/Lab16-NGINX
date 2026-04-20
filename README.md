@@ -343,9 +343,12 @@ sudo systemctl reload nginx
 ```
 
 ```bash
-echo '<h1>I have successfully installed and configured nginx webserver</h1><br><h2>Your Name here</h2>' | sudo tee /var/www/html/index.html
+echo '<h1> your name: I have successfully installed and configured nginx webserver</h1><br><h2>Your Name here</h2>' | sudo tee /var/www/html/index.html
 ```
-
+Or
+```bash
+sudo nano  /var/www/html/index.html
+```
 
 
 **Пояснение:** `reload` применяет конфигурацию без остановки сервера (**graceful reload**).
@@ -403,7 +406,7 @@ sudo tail -5 /var/log/nginx/access.log
 **Ожидаемый результат:** Записи с IP-адресом Windows и кодами **301** или **200**
 
 ---
-
+### **Дополнительная задача**
 Обновите стандартный веб-сайт "/var/www/html/index.html".
 
 Создайте красивую главную веб-страницу Nginx, используя HTML, CSS и JavaScript.
