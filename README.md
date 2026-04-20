@@ -338,18 +338,23 @@ server {
 ### **Шаг 6.3: Проверка и перезагрузка**
 
 ```bash
-sudo nginx -t
 sudo systemctl reload nginx
+sudo nginx -t
 ```
 
-```bash
-echo '<h1> your name: I have successfully installed and configured nginx webserver</h1><br><h2>Your Name here</h2>' | sudo tee /var/www/html/index.html
-```
-Or
 ```bash
 sudo nano  /var/www/html/index.html
-```
 
+```
+```text
+<heed>
+  <title> My Nginx webServer</title>
+</heed>
+<body>
+<h1>write your name <h1>
+<br>
+ <h2> i have succesfully installed and configured nginx webserver</h2>
+</body>"
 
 **Пояснение:** `reload` применяет конфигурацию без остановки сервера (**graceful reload**).
 
