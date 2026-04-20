@@ -361,9 +361,6 @@ sudo nano  /var/www/html/index.html
 </html>
 
 ```
-
-**Пояснение:** `reload` применяет конфигурацию без остановки сервера (**graceful reload**).
-
 ### **Шаг 6.4: Проверка HTTPS на локальной машине**
 
 **From Windows browser:**  
@@ -376,14 +373,15 @@ sudo nano  /var/www/html/index.html
 
 **Ожидаемый результат:** Строки с `:80` и `:443`
 
-### **Проверка 7.3: Тестирование с Windows (HTTP → HTTPS)**
+### **Проверка 6.5: Тестирование с Windows (HTTP → HTTPS)**
 
 **Ожидаемый результат:** `HTTP/1.1 301 Moved Permanently` и заголовок `Location: https://...`
 
-### **Проверка 7.4: Тестирование с Windows (HTTPS)**
+### **Проверка 6.6: Тестирование с Windows (HTTPS)**
 
 **WebBrowser:**  
-[https://192.168.56.101](http://192.168.56.101)
+[https://192.168.56.101]
+(http://192.168.56.101)
 
 **Ожидаемый результат:** HTML-содержимое
 
