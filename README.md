@@ -180,15 +180,18 @@ http://192.168.56.10?
 ---`bash`
 
 `sudo ufw allow ssh`  
+
 `sudo ufw allow http`
 
 `sudo ufw allow https`
+
 ---
 ### **Шаг 3.2: Включение UFW**
 
 ---`bash`
 
 `sudo ufw enable`
+
 ---
 При запросе введите `y`.
 
@@ -222,6 +225,7 @@ Content  : <!DOCTYPE html>
 ---`bash`
 
 `sudo cat /etc/nginx/nginx.conf`
+
 ---
 Ключевые директивы:
 
@@ -238,6 +242,7 @@ Content  : <!DOCTYPE html>
 `ls -la /etc/nginx/sites-available/`
 
 `ls -la /etc/nginx/sites-enabled/`
+
 ---
 Пояснение:
 
@@ -308,7 +313,9 @@ Content  : <!DOCTYPE html>
 Замените содержимое на следующее:
 
 `nginx`
----
+
+```text
+
 server {
     listen 443 ssl;
     server_name _;
@@ -330,7 +337,9 @@ server {
 
     return 301 https://$host$request_uri;
 }
+
 ---
+
 Что делает конфигурация:
 
 | Блок | Функция |
