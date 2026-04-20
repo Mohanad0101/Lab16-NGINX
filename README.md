@@ -207,113 +207,101 @@ curl http://192.168.56.101
 StatusCode   : 200   
 StatusDescription : OK 
 Content  : <!DOCTYPE html>  
+
 ---
 
-## **  4: Изучение конфигурации Nginx**
+## **4: Изучение конфигурации Nginx**
 
-Цель: Понять структуру конфигурационных файлов.
+**Цель:** Понять структуру конфигурационных файлов.
 
 ### **Шаг 4.1: Просмотр главного файла**
 
----`bash`
+```bash
+sudo cat /etc/nginx/nginx.conf
+```
 
-`sudo cat /etc/nginx/nginx.conf`
+**Ключевые директивы:**
 
----
-Ключевые директивы:
-
-| Директива | Значение |
-| :---- | :---- |
-| `user www-data;` | Рабочие процессы работают от непривилегированного пользователя |
-| `worker_processes auto;` | Один процесс на ядро CPU |
+| Директива                  | Значение |
+| :------------------------- | :------- |
+| `user www-data;`           | Рабочие процессы работают от непривилегированного пользователя |
+| `worker_processes auto;`   | Один процесс на ядро CPU |
 | `include /etc/nginx/sites-enabled/*;` | Подключение активных виртуальных хостов |
-
----
 
 ### **Шаг 4.2: Модульная структура**
 
-`bash`
+```bash
+ls -la /etc/nginx/sites-available/
+ls -la /etc/nginx/sites-enabled/
+```
 
-`ls -la /etc/nginx/sites-available/`
-
-`ls -la /etc/nginx/sites-enabled/`
-
----
-
-Пояснение:
-
-* `sites-available`   хранит все конфигурации (активные и неактивные)  
-* `sites-enabled`   содержит символические ссылки на активные конфигурации
+**Пояснение:**
+- `sites-available` — хранит все конфигурации (активные и неактивные)  
+- `sites-enabled` — содержит символические ссылки на активные конфигурации
 
 ### **Шаг 4.3: Проверка синтаксиса**
 
-`bash`
+```bash
+sudo nginx -t
+```
 
-`sudo nginx -t`
+**Ожидаемый результат:** `syntax is ok`, `test is successful`
 
-Ожидаемый результат: `syntax is ok`, `test is successful`
-
-Важно: Всегда выполняйте эту команду перед перезагрузкой Nginx.
+**Важно:** Всегда выполняйте эту команду перед перезагрузкой **Nginx**.
 
 ---
 
-## **  5: Генерация TLS-сертификата**
+## **5: Генерация TLS-сертификата**
 
-Цель: Создать самоподписанный сертификат для HTTPS.
+**Цель:** Создать самоподписанный сертификат для **HTTPS**.
 
 ### **Шаг 5.1: Создание каталога для сертификатов**
----
-`bash`
 
-`sudo mkdir -p /etc/nginx/ssl`
+```bash
+sudo mkdir -p /etc/nginx/ssl
+```
 
 ### **Шаг 5.2: Генерация ключа и сертификата**
----
-`bash`
 
-`sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \`  
-  `-keyout /etc/nginx/ssl/selfsigned.key \`  
-  `-out /etc/nginx/ssl/selfsigned.crt \`
+```bash
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /etc/nginx/ssl/selfsigned.key \
+  -out /etc/nginx/ssl/selfsigned.crt \
+  -subj "/C=RU/ST=Moscow/L=Moscow/O=Lab/CN=localhost"
+```
 
-  `-subj "/C=RU/ST=Moscow/L=Moscow/O=Lab/CN=localhost"`
----
-Параметры:
+**Параметры:**
 
-| Параметр | Значение |
-| :---- | :---- |
-| `-x509` | Создаёт самоподписанный сертификат |
-| `-nodes` | Ключ без парольной защиты |
-| `-days 365` | Срок действия 1 год |
-| `-newkey rsa:2048` | 2048-битный ключ RSA |
-
----
+| Параметр             | Значение |
+| :-------------------- | :------- |
+| `-x509`              | Создаёт самоподписанный сертификат |
+| `-nodes`             | Ключ без парольной защиты |
+| `-days 365`          | Срок действия 1 год |
+| `-newkey rsa:2048`   | **2048**-битный ключ **RSA** |
 
 ### **Шаг 5.3: Проверка**
 
-`bash`
+```bash
+ls -la /etc/nginx/ssl/
+```
 
-`ls -la /etc/nginx/ssl/`
-
-Ожидаемый результат: Файлы `selfsigned.crt` и `selfsigned.key` присутствуют.
+**Ожидаемый результат:** Файлы `selfsigned.crt` и `selfsigned.key` присутствуют.
 
 ---
 
-## **  6: Настройка виртуального хоста с HTTPS**
+## **6: Настройка виртуального хоста с HTTPS**
 
-Цель: Настроить Nginx для приёма HTTPS-соединений и перенаправления HTTP на HTTPS.
+**Цель:** Настроить **Nginx** для приёма **HTTPS**-соединений и перенаправления **HTTP** на **HTTPS**.
 
 ### **Шаг 6.1: Редактирование конфигурации**
 
-`bash`
+```bash
+sudo nano /etc/nginx/sites-available/default
+```
 
-`sudo nano /etc/nginx/sites-available/default`
+**Замените содержимое на следующее:**
 
-Замените содержимое на следующее:
----
-`nginx`
-
-```text
-
+```nginx
 server {
     listen 443 ssl;
     server_name _;
@@ -335,184 +323,169 @@ server {
 
     return 301 https://$host$request_uri;
 }
+```
 
----
+**Что делает конфигурация:**
 
-### **Что делает конфигурация:**
+| Блок              | Функция |
+| :---------------- | :------ |
+| Первый `server`   | Принимает **HTTPS** на порту **443**, использует **TLS**-сертификат |
+| Второй `server`   | Принимает **HTTP** на порту **80**, перенаправляет на **HTTPS** (код **301**) |
 
-| Блок | Функция |
-| :---- | :---- |
-| Первый `server` | Принимает HTTPS на порту 443, использует TLS-сертификат |
-| Второй `server` | Принимает HTTP на порту 80, перенаправляет на HTTPS (код 301\) |
----
 ### **Шаг 6.2: Сохранение**
 
-В nano: `Ctrl+O`, `Enter`, `Ctrl+X`
+В **nano**: `Ctrl+O`, `Enter`, `Ctrl+X`
 
 ### **Шаг 6.3: Проверка и перезагрузка**
 
-`bash`
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+```
 
-`sudo nginx -t`
+```bash
+echo '<h1>I have successfully installed and configured nginx webserver</h1><br><h2>Your Name here</h2>' | sudo tee /var/www/html/index.html
+```
 
-`sudo systemctl reload nginx`
----
-`bash`
-
-`echo '<h1>I have successfully installed and configured nginx webserver</h1> </br> <h2> Your Name here</h2>' | sudo tee /var/www/html/index.html`
----
-Пояснение: `reload` применяет конфигурацию без остановки сервера (graceful reload).
-
+**Пояснение:** `reload` применяет конфигурацию без остановки сервера (**graceful reload**).
 
 ### **Шаг 6.4: Проверка HTTPS на локальной машине**
 
-`from windows browser `
+**From Windows browser:**  
+[https://192.168.56.101](https://192.168.56.101)
 
-`https://192.168.56.10?`
-
-Ожидаемый результат: HTML-содержимое страницы приветствия Nginx.
+**Ожидаемый результат:** HTML-содержимое страницы приветствия **Nginx**.
 
 ---
 
-## **  7: Итоговая проверка**
+## **7: Итоговая проверка**
 
 ### **Проверка 7.1: Состояние службы**
 
-`bash`
+```bash
+sudo systemctl status nginx --no-pager
+```
 
-`sudo systemctl status nginx --no-pager`
-
-Ожидаемый результат: `active (running)`
+**Ожидаемый результат:** `active (running)`
 
 ### **Проверка 7.2: Прослушиваемые порты**
 
-`bash`
+```bash
+sudo ss -tulpn | grep nginx
+```
 
-`sudo ss -tulpn | grep nginx`
-
-Ожидаемый результат: Строки с `:80` и `:443`
+**Ожидаемый результат:** Строки с `:80` и `:443`
 
 ### **Проверка 7.3: Тестирование с Windows (HTTP → HTTPS)**
 
-В PowerShell:
+**В PowerShell:**
 
-`powershell`
+```powershell
+curl -I http://192.168.56.101
+```
 
-`http://<IP-адрес-вашей-ВМ>`
-
-Ожидаемый результат: `HTTP/1.1 301 Moved Permanently` и заголовок `Location: https://...`
+**Ожидаемый результат:** `HTTP/1.1 301 Moved Permanently` и заголовок `Location: https://...`
 
 ### **Проверка 7.4: Тестирование с Windows (HTTPS)**
 
-`WebBrowser`
+**WebBrowser:**  
+[https://192.168.56.101](https://192.168.56.101)
 
-`https://<IP-адрес-вашей-ВМ>`
-
-Ожидаемый результат: HTML-содержимое
-
-`http://<IP-адрес-вашей-ВМ>`
-
-##**redirect 301**
-
-Ожидаемый результат: HTML-содержимое
+**Ожидаемый результат:** HTML-содержимое
 
 ### **Проверка 7.5: Просмотр журнала доступа**
 
-`bash`
+```bash
+sudo tail -5 /var/log/nginx/access.log
+```
 
-`sudo tail -5 /var/log/nginx/access.log`
-
-Ожидаемый результат: Записи с IP-адресом Windows и кодами 301 или 200
+**Ожидаемый результат:** Записи с IP-адресом Windows и кодами **301** или **200**
 
 ---
 
-## **Полный список команд **
+## **Полный список команд**
 
-`bash`
+```bash
+# 1: Удаление Apache2
+sudo systemctl stop apache2
+sudo systemctl disable apache2
+sudo apt purge --auto-remove apache2* -y
+sudo ss -tulpn | grep :80
 
-*`#   1: Удаление Apache2`*  
-`sudo systemctl stop apache2`  
-`sudo systemctl disable apache2`  
-`sudo apt purge --auto-remove apache2* -y`  
-`sudo ss -tulpn | grep :80`
+# 2: Установка Nginx
+sudo apt update
+sudo apt install nginx -y
+sudo systemctl enable nginx
+sudo systemctl start nginx
+sudo systemctl status nginx
 
-*`#   2: Установка Nginx`*  
-`sudo apt update`  
-`sudo apt install nginx -y`  
-`sudo systemctl enable nginx`  
-`sudo systemctl start nginx`  
-`sudo systemctl status nginx`
+# 3: Настройка UFW
+sudo ufw allow ssh
+sudo ufw allow http
+sudo ufw allow https
+sudo ufw enable
+sudo ufw status verbose
 
-*`#   3: Настройка UFW`*  
-`sudo ufw allow ssh`  
-`sudo ufw allow http`  
-`sudo ufw allow https`  
-`sudo ufw enable`  
-`sudo ufw status verbose`
+# 4: Проверка конфигурации
+sudo nginx -t
 
-*`#   4: Проверка конфигурации`*  
-`sudo nginx -t`
+# 5: Генерация TLS-сертификата
+sudo mkdir -p /etc/nginx/ssl
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /etc/nginx/ssl/selfsigned.key \
+  -out /etc/nginx/ssl/selfsigned.crt \
+  -subj "/C=RU/ST=Moscow/L=Moscow/O=Lab/CN=localhost"
 
-*`#   5: Генерация TLS-сертификата`*  
-`sudo mkdir -p /etc/nginx/ssl`  
-`sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \`  
-  `-keyout /etc/nginx/ssl/selfsigned.key \`  
-  `-out /etc/nginx/ssl/selfsigned.crt \`  
-  `-subj "/C=RU/ST=Moscow/L=Moscow/O=Lab/CN=localhost"`
+# 6: Настройка виртуального хоста
+sudo nano /etc/nginx/sites-available/default
+# (Вставьте конфигурацию из шага 6.1)
+sudo nginx -t
+sudo systemctl reload nginx
 
-*`#   6: Настройка виртуального хоста`*  
-`sudo nano /etc/nginx/sites-available/default`  
-*`# (Вставьте конфигурацию из шага 6.1)`*
-
-`sudo nginx -t`  
-`sudo systemctl reload nginx`  
-` https://192.168.56.10?`
-
-*`#   7: Итоговая проверка`*  
-`sudo ss -tulpn | grep nginx`
-
-`sudo tail -5 /var/log/nginx/access.log`
+# 7: Итоговая проверка
+sudo ss -tulpn | grep nginx
+sudo tail -5 /var/log/nginx/access.log
+```
 
 ---
 
 ## **Контрольный список**
 
-| Пункт | Команда проверки | Ожидаемый результат |
-| :---- | :---- | :---- |
-| Apache2 удалён | `sudo ss -tulpn | grep :80` | Пустой вывод |
-| Nginx работает | `sudo systemctl status nginx` | `active (running)` |
-| UFW настроен | `sudo ufw status verbose` | Порты 22,80,443 ALLOW IN |
-| Синтаксис верен | `sudo nginx -t` | `syntax is ok` |
-| Сертификат создан | `ls /etc/nginx/ssl/` | Файлы .crt и .key |
-| HTTPS доступен | `curl -k https://localhost` | HTML-содержимое |
-| HTTP → HTTPS | Из PowerShell `curl -I http://<IP>` | Код 301 |
+| Пункт              | Команда проверки                  | Ожидаемый результат              |
+| :----------------- | :-------------------------------- | :------------------------------- |
+| **Apache2** удалён | `sudo ss -tulpn | grep :80`       | Пустой вывод                     |
+| **Nginx** работает | `sudo systemctl status nginx`     | `active (running)`               |
+| **UFW** настроен   | `sudo ufw status verbose`         | Порты **22,80,443 ALLOW IN**     |
+| Синтаксис верен    | `sudo nginx -t`                   | `syntax is ok`                   |
+| Сертификат создан  | `ls /etc/nginx/ssl/`              | Файлы `.crt` и `.key`            |
+| **HTTPS** доступен | `curl -k https://localhost`       | HTML-содержимое                  |
+| **HTTP → HTTPS**   | `curl -I http://<IP>`             | Код **301**                      |
 
 ---
 
 ## **Устранение неполадок**
 
-| Проблема | Диагностика | Решение |
-| :---- | :---- | :---- |
-| Port 80 busy | `sudo ss -tulpn | grep :80` | Завершить процесс или завершить удаление Apache2 |
-| UFW блокирует | `sudo ufw status verbose` | Выполнить `sudo ufw allow http/https` |
-| Nginx не стартует | `sudo nginx -t` | Исправить синтаксические ошибки |
-| Сертификат не найден | `ls /etc/nginx/ssl/` | Повторить   5 |
+| Проблема              | Диагностика                    | Решение                          |
+| :-------------------- | :------------------------------ | :------------------------------- |
+| **Port 80 busy**      | `sudo ss -tulpn | grep :80`     | Завершить процесс или удалить **Apache2** |
+| **UFW** блокирует     | `sudo ufw status verbose`       | `sudo ufw allow http/https`      |
+| **Nginx** не стартует | `sudo nginx -t`                 | Исправить синтаксические ошибки  |
+| Сертификат не найден  | `ls /etc/nginx/ssl/`            | Повторить шаг **5**              |
 
 ---
-
 
 ## **Заключение**
 
 В ходе лабораторной работы вы выполнили:
 
-|   | Выполненное действие |
-| :---- | :---- |
-| 1 | Удалили Apache2 и освободили порты |
-| 2 | Установили и запустили Nginx |
+| # | Выполненное действие |
+|---|:---------------------|
+| 1 | Удалили **Apache2** и освободили порты |
+| 2 | Установили и запустили **Nginx** |
 | 3 | Настроили межсетевой экран по принципу минимальных привилегий |
-| 4 | Изучили иерархическую структуру конфигурации Nginx |
-| 5 | Сгенерировали самоподписанный TLS-сертификат |
-| 6 | Настроили виртуальный хост с HTTPS и перенаправлением |
+| 4 | Изучили иерархическую структуру конфигурации **Nginx** |
+| 5 | Сгенерировали самоподписанный **TLS**-сертификат |
+| 6 | Настроили виртуальный хост с **HTTPS** и перенаправлением |
 | 7 | Выполнили полную проверку работоспособности |
 
-Лабораторная работа завершена. Вы успешно развернули защищённый веб\-сервер Nginx.  
+**Лабораторная работа завершена.** Вы успешно развернули защищённый веб-сервер **Nginx**.
