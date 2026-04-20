@@ -238,15 +238,18 @@ Content  : <!DOCTYPE html>
 | `worker_processes auto;` | Один процесс на ядро CPU |
 | `include /etc/nginx/sites-enabled/*;` | Подключение активных виртуальных хостов |
 
+---
+
 ### **Шаг 4.2: Модульная структура**
 
----`bash`
+`bash`
 
 `ls -la /etc/nginx/sites-available/`
 
 `ls -la /etc/nginx/sites-enabled/`
 
 ---
+
 Пояснение:
 
 * `sites-available`   хранит все конфигурации (активные и неактивные)  
@@ -293,6 +296,8 @@ Content  : <!DOCTYPE html>
 | `-days 365` | Срок действия 1 год |
 | `-newkey rsa:2048` | 2048-битный ключ RSA |
 
+---
+
 ### **Шаг 5.3: Проверка**
 
 `bash`
@@ -314,7 +319,7 @@ Content  : <!DOCTYPE html>
 `sudo nano /etc/nginx/sites-available/default`
 
 Замените содержимое на следующее:
-
+---
 `nginx`
 
 ```text
@@ -343,13 +348,13 @@ server {
 
 ---
 
-Что делает конфигурация:
+### **Что делает конфигурация:**
 
 | Блок | Функция |
 | :---- | :---- |
 | Первый `server` | Принимает HTTPS на порту 443, использует TLS-сертификат |
 | Второй `server` | Принимает HTTP на порту 80, перенаправляет на HTTPS (код 301\) |
-
+---
 ### **Шаг 6.2: Сохранение**
 
 В nano: `Ctrl+O`, `Enter`, `Ctrl+X`
