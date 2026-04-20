@@ -89,18 +89,21 @@ Nginx :это высокопроизводительный веб\-сервер,
 
 `bash`
 
-`ls /etc/netplan/
-sudo nano /etc/netplan/00-installer-config.yaml`
+`ls /etc/netplan/`
+
+`sudo nano /etc/netplan/00-installer-config.yaml`
+
 ## Пример конфигурации:
 
 ```text
 network:
   version: 2
+  renderer: networkd  
   ethernets:
     enp0s3:
       dhcp4: true
     enp0s8:
-      dhcp4: no
+      dhcp4: false
       addresses:
         - 192.168.56.101/24
 ```
@@ -113,12 +116,19 @@ network:
 
 `bash`
 
+`ifconfig enp0s8`
+
 `ip addr show enp0s8`
 
 `ip route`
 
 ---
+## **  windows Powershell**
+`bash`
 
+`ssh xxxuser@192.168.56.101`
+
+-----
 ## **  2: Установка Nginx**
 
 Цель: Установить и запустить веб\-сервер.
